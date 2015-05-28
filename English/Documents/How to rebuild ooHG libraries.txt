@@ -1,0 +1,9 @@
+To rebuild ooHG libraries, follow this procedure:
+
+1. Open Windows Explorer and select C:\OOHG\SOURCE folder.
+2. Double click on MAKELIB.BAT file to rebuild using Harbour and MinGW compiler.
+   To use another compilers you must tweak and use one of these alternatives:
+   MAKELIB_BCC.BAT, MAKELIB_PC.BAT or MAKELIB_VC.BAT
+
+The libraries can, also, be rebuild using the Harbour's 'hbmk2' tool.
+See How to build the ooHG libraries for Harbour 3.x and MinGW using Harbour's 'hbmk2' utility.
