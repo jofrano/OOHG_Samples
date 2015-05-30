@@ -13,7 +13,6 @@
  */
 
 #include "oohg.ch"
-#include "dbstruct.ch"
 
 REQUEST DBFCDX, DBFFPT
 
