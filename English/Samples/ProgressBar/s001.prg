@@ -5,7 +5,8 @@
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
  * This sample shows how define a ProgressBar with Marquee
- * style and how to programmaticaly change the style.
+ * style (the control shows a never stopping animated bar),
+ * and how to programmaticaly change the style.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

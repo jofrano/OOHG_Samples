@@ -4,7 +4,10 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to link a window to a Tree control.
+ * This sample shows how to link different window to the
+ * items of a Tree control. Whenever the selected item is
+ * changed, the corresponding window is shown at the left
+ * side of the form.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
