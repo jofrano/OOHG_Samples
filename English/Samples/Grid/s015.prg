@@ -5,7 +5,16 @@
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
  * This sample shows how to set a Grid that behaves like
- * Excel when editing a cell.
+ * Excel when editing a cell. When you press a cursor key
+ * while characters are being entered in a cell, the string
+ * is stored and the cursor is moved to the corresponding
+ * cell (EDITLIKEEXCEL clause). The same happens when the
+ * mouse is clicked outside the edit window (NOMODALEDIT
+ * clause). Instead of enabling this behaviour for the
+ * whole grid, you can enable it control by control.
+ * Also notice the different behaviour of method EditGrid
+ * and method EditCell. To enter full edit mode press F2
+ * (like in Excel).
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

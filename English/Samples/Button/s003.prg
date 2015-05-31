@@ -26,6 +26,9 @@
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
+ *
+ * You can download the resource file and the images from
+ * https://github.com/fyurisich/OOHG_Samples/tree/master/English/Samples/Button
  */
 
 #include "oohg.ch"

@@ -1,5 +1,5 @@
 /*
- * Grid Sample n° 5
+ * Grid Sample n° 05
  * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
@@ -11,7 +11,7 @@
  * The methods exampled are DeleteColumn, AddColumn,
  * LoadHeaderImages, HeaderImage, HeaderImageAlign,
  * ColumnHide, ColumnShow, ColumnsBetterAutoFit, Header
- * and Item.
+ * and Item. This also applies to Browse and XBrowse controls.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

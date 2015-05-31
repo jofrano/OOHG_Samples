@@ -1,5 +1,5 @@
 /*
- * Grid Sample n° 6
+ * Grid Sample n° 06
  * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
@@ -7,8 +7,9 @@
  * Based on a sample from OOHG distribution build by
  * Ciro Vargas C. <cvc@oohg.org>
  *
- * This sample shows how to set a Grid with editable
- * images in the first column.
+ * This sample shows how to set a Grid with 'editable'
+ * images in the first column. The images can be replaced
+ * by anyone of the imagelist asociated with the grid.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

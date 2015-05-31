@@ -1,5 +1,5 @@
 /*
- * Grid Sample n° 2
+ * Grid Sample n° 02
  * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
@@ -7,7 +7,21 @@
  * Based on a sample from OOHG distribution build by
  * Ciro Vargas C. <cvc@oohg.org>
  *
- * This sample shows how to set navigation by cell.
+ * This sample shows how to create a Grid with navigation by cell
+ * capabilities. By default, the navigation is restricted to the
+ * selected row, but you can enable extended navigation by adding
+ * the FULLMOVE clause at define time or by changing FULLMOVE
+ * property at run time. This sample also demonstrate methods:
+ * Left, Right, Up, Down, PageDown, PageUp, GoTop, GoBottom,
+ * AddItem, AppendItem, EditCell, AddColumn, DeleteColumn,
+ * ColumnHide and, ColumnShow. This kind of Grid is implemented
+ * by TGridByCell subclass of TGrid class, so you can use almost
+ * all the methods of the parent class. Beware that the Value of
+ * TGridByCell class is a two items array {Row,Col} instead of
+ * the number in TGrid class, so if you plan to convert any of
+ * your old grids to this new class, you must take care of this
+ * change. See document Colors of rows and columns in grid,
+ * xbrowse and browse controls.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

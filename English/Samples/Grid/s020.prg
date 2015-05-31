@@ -5,6 +5,8 @@
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
  * This sample shows how to use an IMAGELIST ColumnControl.
+ * The control uses the item's value (a zero based number)
+ * to display one of the images in IMAGE clause.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

@@ -1,5 +1,5 @@
 /*
- * Grid Sample n° 8
+ * Grid Sample n° 08
  * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>

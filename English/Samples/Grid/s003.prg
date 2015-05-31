@@ -1,5 +1,5 @@
 /*
- * Grid Sample n° 3
+ * Grid Sample n° 03
  * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
@@ -7,8 +7,9 @@
  * Based on a sample from OOHG distribution build by
  * Ciro Vargas C. <cvc@oohg.org>
  *
- * This sample shows how to abort edition in a Grid
- * with Inplace clause using a Timer.
+ * This sample shows how to abort edition in a Grid with
+ * Inplace clause using a Timer. It relies on the fact that
+ * the editing is done in a modal window called _OOHG_GRIDWN.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
