@@ -4,15 +4,22 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to drag and drop between two
- * Tree controls. It also shows how to use methods
- * FirstVisible, VisibleCount, ItemHeight, LastVisible,
- * NextVisible, IsItemVisible, IsItemValid, ItemVisible,
- * SelectionID, IsItemExpanded, Expand, ItemDraggable,
- * ItemDraggable and ItemEnabled.
- *
+ * This sample shows how to drag and drop between two Tree
+ * controls, how to get the visible items and the items
+ * currently shown in the control's window, and how to get
+ * the reference numbers of the visible items and the reference
+ * numbers of the items currently shown in the control's window.
+ * It also shows how to use methods EditLabel, Expand,
+ * FirstVisible, IsItemExpanded, IsItemValid, IsItemVisible,
+ * ItemCount, ItemDraggable, ItemEnabled, ItemHeight,
+ * ItemVisible, LastVisible, NextVisible, Value, SelectionID
+ * and VisibleCount.
+ * 
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
+ *
+ * You can download the resource file and the images from:
+ * https://github.com/fyurisich/OOHG_Samples/tree/master/English/Samples/Tree
  */
 
 #include "oohg.ch"

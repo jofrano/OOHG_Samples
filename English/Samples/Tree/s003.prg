@@ -4,10 +4,25 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to use ITEMIDS clause in TREE controls.
+ * This sample shows how to:
+ * Drag and drop between two TREE controls (one with ITEMIDS
+ * the other without).
+ * Use AUTOID and ON DROP clauses.
+ * Use methods FirstVisible, GetChildren, IsItemVisible,
+ * ItemCount, ItemHeight, ItemVisible, LastVisible,
+ * NextVisible, SelectionID, Value and VisibleCount.
+ * Get the visible items and the items currently shown in the
+ * control's window.
+ * Get the reference numbers of the visible items and the
+ * reference numbers of the items currently shown in the
+ * control's window.
+ * Get and set the ID of the selected item.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
+ *
+ * You can download the resource file and the images from:
+ * https://github.com/fyurisich/OOHG_Samples/tree/master/English/Samples/Tree
  */
 
 #include "oohg.ch"

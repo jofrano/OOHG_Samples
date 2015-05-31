@@ -4,8 +4,8 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to define a Checkbox with transparent
- * background inside a Tab control.
+ * This sample shows how to define a treestate left aligned
+ * Checkbox with transparent background inside a Tab control.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

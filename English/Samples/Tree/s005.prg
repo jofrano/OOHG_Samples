@@ -7,9 +7,9 @@
  * This sample is an adaptation of a contribution provided by
  * Alejandro Carvalho <alejandrocarvalho@gmail.com>
  *
- * This sample shows how to save the items of a Tree control
- * into an INI file and how to populate a Tree control by reading
- * its items from an INI file.
+ * This sample shows how to save the structure and items of a
+ * Tree control into an INI file and how to populate a
+ * Tree control by reading its items from an INI file.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

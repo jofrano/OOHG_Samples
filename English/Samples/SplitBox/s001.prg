@@ -5,7 +5,9 @@
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
  * This sample shows how to display and hide the bands of
- * a SplitBox and how to display and hide its grippers.
+ * a SplitBox and how to display and hide its grippers,
+ * so the bands can't be resized. It also shows how to find
+ * out if a band is visible and if it has a gripper.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

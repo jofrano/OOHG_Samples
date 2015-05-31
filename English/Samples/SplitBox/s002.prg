@@ -5,7 +5,7 @@
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
  * This sample shows how to define a SplitBox with two
- * different Toolbars.
+ * Toolbars in the same row.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
