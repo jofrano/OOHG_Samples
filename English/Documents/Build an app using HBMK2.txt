@@ -3,11 +3,11 @@ In this article I will assume that you are using the ooHG official distro instal
 First of all, be sure you're system's PATH includes C:\OOHG\HARBOUR\BIN and C:\OOHG\MINGW\BIN.
 Also verify that it doesn't includes references to any other C compiler (including another versions of MINGW).
 
-If your app works in GUI or mixed mode, create a text file named BUILD_GUI.HBP in the folder were your source files (.prg files) are located, and copy the code you'll find here. Finally, open a DOS box, change to the app's folder and execute 'HBMK2 BUILD_GUI.HBP', to build the exe file.
+If your app works in GUI or mixed mode, copy file BUILD_GUI.HBP in the folder were your source files (.prg files) are located.
 Finally, open a DOS box, change to the app's folder and execute 'HBMK2 BUILD_GUI.HBP' to build the exe file.
 
-If your app works in console mode, create a text file named BUILD_CON.HBP in the folder were your source files (.prg files) are located, and copy the code you'll find here.
-Finally, open a DOS box, change to the app's folder and execute 'HBMK2 BUILD_CON.HBP', to build the exe file.
+If your app works in console mode, copy file BUILD_CON.HBP in the folder were your source files (.prg files) are located..
+Finally, open a DOS box, change to the app's folder and execute 'HBMK2 BUILD_CON.HBP' to build the exe file.
 
 Notes
 
