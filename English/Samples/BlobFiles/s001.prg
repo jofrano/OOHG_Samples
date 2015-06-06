@@ -4,7 +4,7 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to store/retrieve and image into/from
+ * This sample shows how to store/retrieve an image into/from
  * a BLOB field and how to show it using an IMAGE control.
  * When executed the sample creates IMAGE.DBF, IMAGE.FPT and
  * Output.ico (an exact copy of Input.ico).
