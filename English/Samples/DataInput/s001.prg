@@ -4,9 +4,8 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to make a data input form with
- * data validations (via VALID clause) and how to implement
- * the form's fields reset (ignoring the validations).
+ * This sample shows how to avoid data validation when the
+ * input transaction is canceled.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
