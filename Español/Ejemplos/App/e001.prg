@@ -6,8 +6,8 @@
  *
  * Este ejemplo muestra como utilizar la clase Application.
  *
- * Este ejemplo y los archivos asociados puede descargarse desde
- * https://drive.google.com/folderview?id=0B_y1DvtViOysbi1GMUhQaWZWd3c&usp=sharing
+ * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
+ * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  */
 
 #include "oohg.ch"
