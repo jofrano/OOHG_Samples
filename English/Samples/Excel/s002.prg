@@ -15,8 +15,6 @@
 
 FUNCTION Main
 
-   LOCAL i, aRows[ 15, 5 ]
-
    SET DATE BRITISH
    SET CENTURY ON
    SET NAVIGATION EXTENDED
@@ -47,7 +45,7 @@ RETURN NIL
 
 FUNCTION Open
 
-   LOCAL w_arch, oExcel
+   LOCAL w_arch, oExcel, x, bErrBlck1
 
    IF Empty(w_arch := GetFile({ {'*.xls','*.xls'} }, 'Open Excel', 'C:\', .f., .f.))
       RETURN NIL
@@ -66,8 +64,17 @@ FUNCTION Open
       ENDIF
    #endif
 
-   oExcel:WorkBooks:Open(w_arch, NIL, .T.)
-   oExcel:Visible := .t.
+   // catch any errors
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
+
+   BEGIN SEQUENCE
+      oExcel:WorkBooks:Open(w_arch, NIL, .T.)
+      oExcel:Visible := .t.
+   RECOVER USING x
+      MsgStop( x:Description, "Excel Error" )
+   END SEQUENCE
+
+   ErrorBlock( bErrBlck1 )
 
 RETURN NIL
 

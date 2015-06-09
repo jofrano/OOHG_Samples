@@ -4,7 +4,9 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to load a DBF from a Excel workbook.
+ * This sample shows how to create an Excel workbook from
+ * an array, how to create a DBF from an Excel workbook,
+ * and how to handle errors raised during operations.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
@@ -46,8 +48,8 @@ RETURN NIL
 
 FUNCTION MyProcess( oForm )
 
-   LOCAL cBefore, oExcel, oBook, oSheet, oError
-   LOCAL nLin, i, nCol, cExcel, lOk
+   LOCAL cBefore, oExcel, oBook, oSheet, bErrBlck1, bErrBlck2, x
+   LOCAL nLin, i, nCol, cExcel
    LOCAL aHeaders := { 'CODE', 'NUMBER', 'DATE', 'REFERENCE', 'AMOUNT' }
    LOCAL aData    := { { "AB1", 12, Date(), "Ref. 12", 128.10 }, ;
                        { "AB5", 34, Date(), "Ref. 34", 578.43 }, ;
@@ -55,7 +57,7 @@ FUNCTION MyProcess( oForm )
                        { "MN6", 65, Date(), "Ref. 65", 322.33 }, ;
                        { "OO9", 90, Date(), "Ref. 90", 765.77 } }
 
-   cExcel := CurDrive() + ':\' + CurDir() + "\TEST.XLS"
+   cExcel := HB_DirBase() + 'TEST.XLS'
 
    cBefore := oForm:StatusBar:Item( 1 )
    oForm:StatusBar:Item( 1, 'Creating ' + cExcel + ' ...' )
@@ -75,8 +77,8 @@ FUNCTION MyProcess( oForm )
       ENDIF
    #endif
 
-   oError := ErrorBlock()
-   ErrorBlock( { |e| MyErrorHandler( e ) } )
+   // catch any errors
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
 
    BEGIN SEQUENCE
       oExcel:Visible := .F.
@@ -112,44 +114,60 @@ FUNCTION MyProcess( oForm )
          oSheet:Columns( nCol ):AutoFit()
       NEXT
 
-// http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
-      oBook:SaveAs( cExcel, 39 )          // xlExcel7
+      // save
+      bErrBlck2 := ErrorBlock( { | x | break( x ) } )
+      BEGIN SEQUENCE
+         // http://msdn.microsoft.com/en-us/library/office/bb241279(v=office.12).aspx
+         # define xlExcel7 39
 
-      lOk := .T.
-   RECOVER
-      MsgStop( 'Excel error while creating.' )
-      lOk := .F.
+         // if the file already exists and it's not open, it's overwritten without asking
+         oSheet:SaveAs( cExcel, 39 )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         IF MsgYesNo( cExcel + ' was created !!!' + HB_OsNewLine() + "Create Dbf?" )
+            ConvertToDbf( oForm, cExcel )
+         ENDIF
+      RECOVER USING x
+         // if oSheet:SaveAs() fails, show the error
+         MsgStop( x:Description, "Excel Error" )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         MsgStop( cExcel + ' was not created !!!' )
+      END SEQUENCE
+
+      ErrorBlock( bErrBlck2 )
+   RECOVER USING x
+      MsgStop( x:Description, "Excel Error" )
    END SEQUENCE
 
-   ErrorBlock( oError )
-
-   oExcel:WorkBooks:Close()
-   oExcel:Quit()
+   ErrorBlock( bErrBlck1 )
 
    // This destroys any reference to the Sheet
    oSheet := NIL
+   // This destroys any reference to the WorkBook
+   oBook := NIL
    // This destroys any reference to Excel
    oExcel := NIL
 
    oForm:StatusBar:Item( 1, cBefore )
 
-   IF lOk
-      IF MsgYesNo( cExcel + ' was created' + HB_OsNewLine() + 'and EXCEL.EXE was unloaded from memory.' + HB_OsNewLine() + "Create Dbf?" )
-         ConvertToDbf( oForm, cExcel )
-      ENDIF
-   ENDIF
-
 RETURN NIL
 
 FUNCTION ConvertToDbf( oForm, cExcel )
 
-   LOCAL cBefore, oExcel, oBook, oSheet, oError
-   LOCAL i, nRows, nCols, nLin, aFields, cDbf, lOk
+   LOCAL cBefore, oExcel, oBook, oSheet, bErrBlck1, x
+   LOCAL i, nRows, nCols, nLin, aFields, cDbf
 
    cBefore := oForm:StatusBar:Item( 1 )
    oForm:StatusBar:Item( 1, 'Opening ' + cExcel + ' ...' )
 
-   cDbf := CurDrive() + ':\' + CurDir() + "\TEST.DBF"
+   cDbf := HB_DirBase() + "TEST.DBF"
 
    #ifndef __XHARBOUR__
       IF( oExcel := win_oleCreateObject( 'Excel.Application' ) ) == NIL
@@ -164,8 +182,8 @@ FUNCTION ConvertToDbf( oForm, cExcel )
       ENDIF
    #endif
 
-   oError := ErrorBlock()
-   ErrorBlock( { |e| MyErrorHandler( e ) } )
+   // catch any errors
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
 
    BEGIN SEQUENCE
       oExcel:Visible := .F.
@@ -211,35 +229,23 @@ FUNCTION ConvertToDbf( oForm, cExcel )
       COMMIT
 
       oForm:StatusBar:Item( 1, cDbf + ', ' + Ltrim( Str( RecCount() ) ) + ' records appended ...' )
-      lOk := .T.
-   RECOVER
-      MsgStop( 'Excel error while reading.' )
-      lOk := .F.
+      MsgInfo( cDbf + ' was created' + HB_OsNewLine() + ' !!!' )
+   RECOVER USING x
+      MsgStop( x:Description, "Error" )
    END SEQUENCE
 
-   ErrorBlock( oError )
+   ErrorBlock( bErrBlck1 )
 
    oExcel:WorkBooks:Close()
    oExcel:Quit()
 
    oSheet := NIL
+   oBook  := NIL
    oExcel := NIL
 
    oForm:StatusBar:Item( 1, cBefore )
 
-   IF lOk
-      MsgInfo( cExcel + ' was created' + HB_OsNewLine() + 'and EXCEL.EXE was unloaded from memory.' )
-   ENDIF
-
 RETURN NIL
-
-FUNCTION MyErrorHandler( oError )
-
-  IF ! Empty( oError )
-    BREAK oError
-  ENDIF
-
-RETURN 1
 
 /*
  * EOF

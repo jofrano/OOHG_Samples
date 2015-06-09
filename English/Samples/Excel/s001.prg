@@ -9,8 +9,8 @@
  * Portions of the code in the ToExcel function are
  * licensed under OOHG's license.
  *
- * This sample shows how to create and Excel workbook
- * without user's interaction.
+ * This sample shows how to create an Excel workbook,
+ * using data from a Grid, without user's interaction.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
@@ -20,7 +20,7 @@
 
 FUNCTION Main()
 
-   LOCAL i, aRows[ 15, 5 ]
+   LOCAL i, aRows[ 15, 5 ], oGrid
 
    SET DATE BRITISH
    SET CENTURY ON
@@ -73,11 +73,12 @@ RETURN NIL
 
 FUNCTION ToExcel( oGrid )
 
-   LOCAL cBefore, oExcel, oSheet, nLin, nRow, nCol
+   LOCAL cBefore, oExcel, oSheet, nLin, nRow, nCol, bErrBlck1, bErrBlck2, x
 
    cBefore := Form_1.StatusBar.Item( 1 )
    Form_1.StatusBar.Item( 1 ) := 'Creating TEST.XLS in base folder ...'
 
+   // open a fresh copy of EXCEL.EXE
    #ifndef __XHARBOUR__
       IF( oExcel := win_oleCreateObject( 'Excel.Application' ) ) == NIL
          MsgStop( 'Error: Excel not available. [' + win_oleErrorText()+ ']' )
@@ -91,42 +92,81 @@ FUNCTION ToExcel( oGrid )
       ENDIF
    #endif
 
-   oExcel:WorkBooks:Add()
-   oSheet := oExcel:ActiveSheet()
-   oSheet:Cells:Font:Name := 'Arial'
-   oSheet:Cells:Font:Size := 10
+   // catch any errors
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
 
-   oSheet:Cells( 1, 1 ):Value := Upper( 'Exported from OOHG !!!' )
-   oSheet:Cells( 1, 1 ):Font:Bold := .T.
+   BEGIN SEQUENCE
+      oExcel:Visible := .F.
+      oExcel:DisplayAlerts :=.F.
 
-   nLin := 4
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet:Cells( nLin, nCol ):Value := Upper( oGrid:aHeaders[ nCol ] )
-      oSheet:Cells( nLin, nCol ):Font:Bold := .T.
-   NEXT
-   nLin += 2
+      // open new book
+      oExcel:WorkBooks:Add()
 
-   FOR nRow := 1 to oGrid:ItemCount
-      FOR nCol := 1 to Len( oGrid:aHeaders )
-         oSheet:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
+      // set first sheet as current
+      oSheet := oExcel:ActiveSheet()
+
+      // change sheet's name and default font name and size
+      oSheet:Name := "Data"
+      oSheet:Cells:Font:Name := 'Arial'
+      oSheet:Cells:Font:Size := 10
+
+      // put title
+      oSheet:Cells( 1, 1 ):Value := Upper( 'Exported from OOHG !!!' )
+      oSheet:Cells( 1, 1 ):Font:Bold := .T.
+
+      // put headers using bold style
+      nLin := 4
+      FOR nCol := 1 TO Len( oGrid:aHeaders )
+         oSheet:Cells( nLin, nCol ):Value := Upper( oGrid:aHeaders[ nCol ] )
+         oSheet:Cells( nLin, nCol ):Font:Bold := .T.
       NEXT
-      nRow ++
-      nLin ++
-   NEXT
+      nLin += 2
 
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet:Columns( nCol ):AutoFit()
-   NEXT
+      // put rows
+      FOR nRow := 1 to oGrid:ItemCount
+         FOR nCol := 1 to Len( oGrid:aHeaders )
+            oSheet:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
+         NEXT
+         nRow ++
+         nLin ++
+      NEXT
 
-   oSheet:SaveAs( HB_DirBase() + 'TEST.XLS' )
-   oExcel:WorkBooks:Close()
-   oExcel:Quit()
+      // autofit columns
+      FOR nCol := 1 TO Len( oGrid:aHeaders )
+         oSheet:Columns( nCol ):AutoFit()
+      NEXT
+
+      // save
+      bErrBlck2 := ErrorBlock( { | x | break( x ) } )
+      BEGIN SEQUENCE
+         // if the file already exists and it's not open, it's overwritten without asking
+         oSheet:SaveAs( HB_DirBase() + 'TEST.XLS' )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         MsgInfo( HB_DirBase() + 'TEST.XLS was created !!!' )
+      RECOVER USING x
+         // if oSheet:SaveAs() fails, show the error
+         MsgStop( x:Description, "Excel Error" )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         MsgStop( HB_DirBase() + 'TEST.XLS was not created !!!' )
+      END SEQUENCE
+
+      ErrorBlock( bErrBlck2 )
+   RECOVER USING x
+      MsgStop( x:Description, "Excel Error" )
+   END SEQUENCE
+
+   ErrorBlock( bErrBlck1 )
 
    oSheet := NIL
    oExcel := NIL
-
-   MsgInfo( HB_DirBase() + 'TEST.XLS was created' + HB_OsNewLine() + ;
-            'and EXCEL.EXE was unloaded from memory.' )
 
    Form_1.StatusBar.Item( 1 ) := cBefore
 

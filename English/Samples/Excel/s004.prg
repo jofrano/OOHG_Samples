@@ -9,8 +9,9 @@
  * Portions of the code in the ToExcel function are
  * licensed under OOHG's license.
  *
- * This sample shows how to copy and move worksheets
- * without user's interaction.
+ * This sample shows how to create an Excel workbook using
+ * data from a Grid control, without user's interaction.
+ * It also shows how to copy and move worksheets.
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
@@ -20,7 +21,7 @@
 
 FUNCTION Main()
 
-   LOCAL i, aRows[ 15, 5 ]
+   LOCAL i, aRows[ 15, 5 ], oGrid
 
    SET DATE BRITISH
    SET CENTURY ON
@@ -73,7 +74,7 @@ RETURN NIL
 
 FUNCTION ToExcel( oGrid )
 
-   LOCAL cBefore, oExcel, oSheet1, oSheet2, oSheet3, nLin, nRow, nCol
+   LOCAL cBefore, oExcel, oSheet1, oSheet2, oSheet3, nLin, nRow, nCol, bErrBlck1, x, bErrBlck2
 
    cBefore := Form_1.StatusBar.Item( 1 )
    Form_1.StatusBar.Item( 1 ) := 'Creating TEST.XLS in base folder ...'
@@ -91,67 +92,96 @@ FUNCTION ToExcel( oGrid )
       ENDIF
    #endif
 
-   // Create new book
+   // catch any errors
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
 
-   oExcel:WorkBooks:Add()
-   oSheet1 := oExcel:ActiveSheet()
-   oSheet1:Name := "Sheet1"
+   BEGIN SEQUENCE
+      oExcel:Visible := .F.
+      oExcel:DisplayAlerts :=.F.
 
-   // Fill in some data and format it
+      // open new book
+      oExcel:WorkBooks:Add()
 
-   oSheet1:Cells:Font:Name := 'Arial'
-   oSheet1:Cells:Font:Size := 10
+      // set first sheet as current
+      oSheet1 := oExcel:ActiveSheet()
 
-   oSheet1:Cells( 1, 1 ):Value := Upper( 'Exported from OOHG !!!' )
-   oSheet1:Cells( 1, 1 ):Font:Bold := .T.
+      // change sheet's name and default font name and size
+      oSheet1:Name := "Sheet1"
 
-   nLin := 4
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet1:Cells( nLin, nCol ):Value := Upper( oGrid:aHeaders[ nCol ] )
-      oSheet1:Cells( nLin, nCol ):Font:Bold := .T.
-   NEXT
-   nLin += 2
+      // fill in some data and format it
+      oSheet1:Cells:Font:Name := 'Arial'
+      oSheet1:Cells:Font:Size := 10
 
-   FOR nRow := 1 to oGrid:ItemCount
-      FOR nCol := 1 to Len( oGrid:aHeaders )
-         oSheet1:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
+      oSheet1:Cells( 1, 1 ):Value := Upper( 'Exported from OOHG !!!' )
+      oSheet1:Cells( 1, 1 ):Font:Bold := .T.
+
+      nLin := 4
+      FOR nCol := 1 TO Len( oGrid:aHeaders )
+         oSheet1:Cells( nLin, nCol ):Value := Upper( oGrid:aHeaders[ nCol ] )
+         oSheet1:Cells( nLin, nCol ):Font:Bold := .T.
       NEXT
-      nRow ++
-      nLin ++
-   NEXT
+      nLin += 2
 
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet1:Columns( nCol ):AutoFit()
-   NEXT
+      FOR nRow := 1 to oGrid:ItemCount
+         FOR nCol := 1 to Len( oGrid:aHeaders )
+            oSheet1:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
+         NEXT
+         nRow ++
+         nLin ++
+      NEXT
 
-   // Copy sheet before
+      FOR nCol := 1 TO Len( oGrid:aHeaders )
+         oSheet1:Columns( nCol ):AutoFit()
+      NEXT
 
-   oSheet1:Copy( oSheet1 )
-   oSheet2 := oExcel:ActiveSheet()
-   oSheet2:Name := "Sheet2"
+      // Copy sheet before
 
-   // Copy sheet after
+      oSheet1:Copy( oSheet1 )
+      oSheet2 := oExcel:ActiveSheet()
+      oSheet2:Name := "Sheet2"
 
-   oSheet1:Copy( oSheet1 )
-   oSheet3 := oExcel:ActiveSheet()
-   oSheet3:Name := "Sheet3"
-   oSheet1:Move( oSheet3 )
+      // Copy sheet after
 
-   // Final sheet order: Sheet2, Sheet1, Sheet3
+      oSheet1:Copy( oSheet1 )
+      oSheet3 := oExcel:ActiveSheet()
+      oSheet3:Name := "Sheet3"
+      oSheet1:Move( oSheet3 )
 
-   // Save
+      // Final sheet order: Sheet2, Sheet1, Sheet3
 
-   ERASE TEST.XLS
+      // Save
 
-   oSheet1:SaveAs( HB_DirBase() + 'TEST.XLS' )
-   oExcel:WorkBooks:Close()
-   oExcel:Quit()
+      // save
+      bErrBlck2 := ErrorBlock( { | x | break( x ) } )
+      BEGIN SEQUENCE
+         // if the file already exists and it's not open, it's overwritten without asking
+         oSheet1:SaveAs( HB_DirBase() + 'TEST.XLS' )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         MsgInfo( HB_DirBase() + 'TEST.XLS was created !!!' )
+      RECOVER USING x
+         // if oSheet1:SaveAs() fails, show the error
+         MsgStop( x:Description, "Excel Error" )
+
+         // close and remove the copy of EXCEL.EXE from memory
+         oExcel:WorkBooks:Close()
+         oExcel:Quit()
+
+         MsgStop( HB_DirBase() + 'TEST.XLS was not created !!!' )
+      END SEQUENCE
+
+      ErrorBlock( bErrBlck2 )
+   RECOVER USING x
+      MsgStop( x:Description, "Excel Error" )
+   END SEQUENCE
+
+   ErrorBlock( bErrBlck1 )
 
    oSheet1 := NIL
    oExcel := NIL
-
-   MsgInfo( HB_DirBase() + 'TEST.XLS was created' + HB_OsNewLine() + ;
-            'and EXCEL.EXE was unloaded from memory.' )
 
    Form_1.StatusBar.Item( 1 ) := cBefore
 
