@@ -1,10 +1,10 @@
 /*
  * Ejemplo Checkbox n° 1
- * Authr: Fernando Yurisich <fernando.yurisich@gmail.com>
+ * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
  * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Ese ejemplo muestra como definir un CheckBox del tipo
+ * Este ejemplo muestra como definir un CheckBox del tipo
  * triestado alineado a la izquierda con fondo transparente
  * dentro de un control Tab.
  *
