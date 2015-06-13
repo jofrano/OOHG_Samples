@@ -1,5 +1,5 @@
 /*
- * Ejemplo XBrowse n° 11
+ * Ejemplo XBrowse n° 1
  * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
  * Ver <http://www.codeproject.com/info/cpol10.aspx>
@@ -17,7 +17,10 @@
 
 FUNCTION Main
 
-   PUBLIC oForm, oXBr
+   LOCAL oForm, oXBr
+   MEMVAR oLbl
+
+   PUBLIC oLbl
 
    REQUEST DBFCDX
 
@@ -47,13 +50,13 @@ FUNCTION Main
          AFTERCOLSIZE {|nCol, nTam| DespuesDeCambiar( nCol, nTam )} ;
          BEFOREAUTOFIT {|nCol| AntesDeAutoAjuste( nCol )}
 
-      @ 220, 10 BUTTON btn_GetOrden OBJ oBtn1 ;
+      @ 220, 10 BUTTON btn_GetOrden ;
          WIDTH 190 ;
          CAPTION "Mostrar orden de columnas" ;
          ACTION oLbl:Value := "Orden de columnas: " + ;
                               AUTOTYPE( oXBr:ColumnOrder )
 
-      @ 220, 220 BUTTON btn_SetOrden OBJ oBtn2 ;
+      @ 220, 220 BUTTON btn_SetOrden ;
          WIDTH 190 ;
          CAPTION "Cambiar orden de columnas" ;
          ACTION ( oXBr:ColumnOrder := {3, 1, 2}, ;
@@ -176,6 +179,8 @@ RETURN .T.
 //--------------------------------------------------------------------------//
 FUNCTION DespuesDeMover( nCol, nPosicion )
 
+   MEMVAR oLbl
+
    AUTOMSGBOX( "La columna " + LTRIM(STR(nCol)) + ;
                " será movida a la posición " + LTRIM(STR(nPosicion)) )
 
@@ -196,9 +201,11 @@ RETURN .T.
 //--------------------------------------------------------------------------//
 FUNCTION DespuesDeCambiar( nCol, nTam )
 
-   IF nTam < 50
-      // El tamaño mínimo de las columnas debe ser 50
-      RETURN 50
+   IF nCol # 1
+      IF nTam < 50
+         // El tamaño mínimo de las columnas debe ser 50
+         RETURN 50
+      ENDIF
    ENDIF
 
 RETURN nTam

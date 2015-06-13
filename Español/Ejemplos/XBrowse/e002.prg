@@ -1,12 +1,12 @@
 /*
- * XBrowse Sample n° 2
- * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
- * Licensed under The Code Project Open License (CPOL) 1.02
- * See <http://www.codeproject.com/info/cpol10.aspx>
+ * Ejemplo XBrowse n° 2
+ * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
+ * Licenciado bajo The Code Project Open License (CPOL) 1.02
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to use SET AUTOADJUST ON.
+ * Este ejemplo muestra como usar SET AUTOADJUST ON.
  *
- * Visit us at https://github.com/fyurisich/OOHG_Samples or at
+ * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  */
 
@@ -21,7 +21,7 @@ FUNCTION Main
       CLIENTAREA ;
       WIDTH 640 ;
       HEIGHT 480 ;
-      TITLE "AutoAdjust Sample" ;
+      TITLE "OOHG - Ejemplo AutoAdjust" ;
 
       @ 20, 20 XBROWSE XBrowse_1 ;
          WIDTH 600 ;
@@ -31,8 +31,8 @@ FUNCTION Main
 
       @ 430, 20 LABEL Label_1 ;
          WIDTH 600 ;
-         VALUE "The columns will maintain its proportions " + ;
-               "whenever the form is resized." ;
+         VALUE "Las columnas guardan su proporción " + ;
+               "cuando el formulario cambia de tamaño." ;
          FONTCOLOR RED
    END WINDOW
 
