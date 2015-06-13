@@ -17,7 +17,7 @@
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  *
  * You can download check.bmp, free.bmp and info.bmp from
- * https://github.com/fyurisich/OOHG_Samples/tree/master/English/Samples/Http
+ * https://github.com/fyurisich/OOHG_Samples/tree/master/English/Samples/Menu
  */
 
 #include "oohg.ch"
