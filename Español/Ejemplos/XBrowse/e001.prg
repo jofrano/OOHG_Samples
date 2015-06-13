@@ -1,13 +1,14 @@
 /*
- * XBrowse Sample n° 1
- * Author: Fernando Yurisich <fernando.yurisich@gmail.com>
- * Licensed under The Code Project Open License (CPOL) 1.02
- * See <http://www.codeproject.com/info/cpol10.aspx>
+ * Ejemplo XBrowse n° 11
+ * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
+ * Licenciado bajo The Code Project Open License (CPOL) 1.02
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how to use the methods related to
- * the XBrowse's headers.
+ * Este ejemplo muestra como utilizar las cláusulas
+ * BEFORECOLMOVE, AFTERCOLMOVE, BEFORECOLSIZE, AFTERCOLSIZE y
+ * BEFOREAUTOFIT, y el método ColumnOrder.
  *
- * Visit us at https://github.com/fyurisich/OOHG_Samples or at
+ * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  */
 
@@ -23,15 +24,15 @@ FUNCTION Main
    SET DATE BRITISH
    SET LANGUAGE TO SPANISH
 
-   OpenTable()
+   AbrirTabla()
 
    DEFINE WINDOW Form_1 OBJ oForm ;
       AT 0, 0 ;
       CLIENTAREA ;
       WIDTH 420 HEIGHT 420 ;
-      TITLE 'XBrowse Headers' ;
+      TITLE 'Cabezales en Controles XBrowse' ;
       MAIN ;
-      ON RELEASE CleanUp()
+      ON RELEASE Limpiar()
 
       @ 10, 10 XBROWSE XBrowse_1 OBJ oXBr ;
          WIDTH 400 ;
@@ -40,36 +41,38 @@ FUNCTION Main
          WIDTHS {50, 150, 150} ;
          WORKAREA Data ;
          FIELDS {'code', 'number', 'issued'} ;
-         BEFORECOLMOVE {|nCol| BeforeColMove( nCol )} ;
-         AFTERCOLMOVE {|nCol, nPos| AfterColMove( nCol, nPos )} ;
-         BEFORECOLSIZE {|nCol| BeforeColSize( nCol )} ;
-         AFTERCOLSIZE {|nCol, nSize| AfterColSize( nCol, nSize )} ;
-         BEFOREAUTOFIT {|nCol| BeforeAutoFit( nCol )}
+         BEFORECOLMOVE {|nCol| AntesDeMover( nCol )} ;
+         AFTERCOLMOVE {|nCol, nPosicion| DespuesDeMover( nCol, nPosicion )} ;
+         BEFORECOLSIZE {|nCol| AntesDeCambiar( nCol )} ;
+         AFTERCOLSIZE {|nCol, nTam| DespuesDeCambiar( nCol, nTam )} ;
+         BEFOREAUTOFIT {|nCol| AntesDeAutoAjuste( nCol )}
 
-      @ 220, 10 BUTTON btn_GetOrder OBJ oBtn1 ;
+      @ 220, 10 BUTTON btn_GetOrden OBJ oBtn1 ;
          WIDTH 190 ;
-         CAPTION "Show columns order" ;
-         ACTION oLbl:Value := "Columns order: " + ;
+         CAPTION "Mostrar orden de columnas" ;
+         ACTION oLbl:Value := "Orden de columnas: " + ;
                               AUTOTYPE( oXBr:ColumnOrder )
 
-      @ 220, 220 BUTTON btn_SetOrder OBJ oBtn2 ;
+      @ 220, 220 BUTTON btn_SetOrden OBJ oBtn2 ;
          WIDTH 190 ;
-         CAPTION "Change columns order" ;
+         CAPTION "Cambiar orden de columnas" ;
          ACTION ( oXBr:ColumnOrder := {3, 1, 2}, ;
-                  oLbl:Value := "Columns order: " + ;
+                  oLbl:Value := "Orden de columnas: " + ;
                                 AUTOTYPE( oXBr:ColumnOrder ) )
 
-      @ 260, 10 LABEL lbl_Order OBJ oLbl ;
+      @ 260, 10 LABEL lbl_Orden OBJ oLbl ;
          WIDTH 400 ;
          VALUE ""
 
-      @ 300, 10 LABEL lbl_Note ;
+      @ 300, 10 LABEL lbl_Nota ;
          WIDTH 400 ;
          HEIGHT 100 ;
-         VALUE "Move or change the size of a header, or doubleclic " + ;
-               "on a divider. Is not allowed to move column 1, nor " + ;
-               "changing it's size (by dragging or by autofit). " + ;
-               "The minimun size of columns 2 and 3 must be 50." ;
+         VALUE "Mueva o cambie el tamaño de un cabezal, o haga " + ;
+               "dobleclic en un separador. No se permite mover " + ;
+               "la columna 1, ni se permite modificar su tamaño " + ;
+               "(ya sea por arrastre o utilizando el ajuste " + ;
+               "automático). El tamaño mínimo de las columnas" + ;
+               "2 y 3 debe ser 50." ;
          FONTCOLOR RED
 
       ON KEY ESCAPE ACTION oForm:Release()
@@ -81,7 +84,7 @@ FUNCTION Main
 RETURN NIL
 
 //--------------------------------------------------------------------------//
-FUNCTION OpenTable()
+FUNCTION AbrirTabla()
 
    LOCAL aDbf1[ 3 ][ 4 ]
 
@@ -152,7 +155,7 @@ FUNCTION OpenTable()
 RETURN NIL
 
 //--------------------------------------------------------------------------//
-FUNCTION CleanUp()
+FUNCTION Limpiar()
 
   DBCLOSEALL()
 
@@ -161,50 +164,50 @@ FUNCTION CleanUp()
 RETURN NIL
 
 //--------------------------------------------------------------------------//
-FUNCTION BeforeColMove( nCol )
+FUNCTION AntesDeMover( nCol )
 
    IF nCol == 1
-      MSGBOX("Column 1 can't be moved !!!")
+      MSGBOX("No se permite mover la columna 1 !!!")
       RETURN .F.
    ENDIF
 
 RETURN .T.
 
 //--------------------------------------------------------------------------//
-FUNCTION AfterColMove( nCol, nPosicion )
+FUNCTION DespuesDeMover( nCol, nPosicion )
 
-   AUTOMSGBOX( "Column " + LTRIM(STR(nCol)) + ;
-               " will be moved to position " + LTRIM(STR(nPosicion)) )
+   AUTOMSGBOX( "La columna " + LTRIM(STR(nCol)) + ;
+               " será movida a la posición " + LTRIM(STR(nPosicion)) )
 
-   oLbl:Value := "Clic on the button to see the columns order."
+   oLbl:Value := "Haga clic en el botón para ver el orden de las columnas."
 
 RETURN .T.
 
 //--------------------------------------------------------------------------//
-FUNCTION BeforeColSize( nCol )
+FUNCTION AntesDeCambiar( nCol )
 
    IF nCol == 1
-     // It's not allowed to change the width of column 1
+     // No se permite modificar el tamaño de la columna 1
      RETURN .F.
    ENDIF
 
 RETURN .T.
 
 //--------------------------------------------------------------------------//
-FUNCTION AfterColSize( nCol, nSize )
+FUNCTION DespuesDeCambiar( nCol, nTam )
 
-   IF nSize < 50
-      // Minimun column' width is 50.
+   IF nTam < 50
+      // El tamaño mínimo de las columnas debe ser 50
       RETURN 50
    ENDIF
 
-RETURN nSize
+RETURN nTam
 
 //--------------------------------------------------------------------------//
-FUNCTION BeforeAutoFit( nCol )
+FUNCTION AntesDeAutoAjuste( nCol )
 
    IF nCol == 1
-     // Autofit of column 1 is not allowed.
+     // No se permite el tamaño automático de la columna 1
      RETURN .F.
    ENDIF
 
