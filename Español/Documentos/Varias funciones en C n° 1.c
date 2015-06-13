@@ -2,7 +2,7 @@
  * Varias Funciones en C n° 1
  * Compiladas por: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
- * Vea <http://www.codeproject.com/info/cpol10.aspx>
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
  * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

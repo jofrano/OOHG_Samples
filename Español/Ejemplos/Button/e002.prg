@@ -2,7 +2,7 @@
  * Ejemplo Button n° 2
  * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
- * Vea <http://www.codeproject.com/info/cpol10.aspx>
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
  * Parcialmente adaptado a partir de un ejemplo de la
  * distribution de OOHG (ver samples\button_mix) mantenida

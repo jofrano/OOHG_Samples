@@ -2,7 +2,7 @@
  * Ejemplo Zip n° 2
  * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
- * Vea <http://www.codeproject.com/info/cpol10.aspx>
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
  * Este ejemplo muestra como extraer todos los archivos de un
  * archivo ZIP mientras se recrea la estructura de carpetas

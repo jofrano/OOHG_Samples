@@ -2,7 +2,7 @@
  * Ejemplo Zip n° 3
  * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
- * Vea <http://www.codeproject.com/info/cpol10.aspx>
+ * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
  * Este ejemplo muestra como crear un archivo ZIP conteniendo
  * archivos seleccionados de una o varias carpetas.
