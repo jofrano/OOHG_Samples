@@ -39,7 +39,7 @@ FUNCTION Main()
       The trick is done by defining an accelerator key for the menu,
       using an & before the corresponding letter (in this case F),
       and simulating that the user has pressed Alt+F with the
-      function INSERTAR_ALT_F().
+      function INSERT_ALT_F().
       */
 
       @ 100, 10 LABEL Lbl_1 ;

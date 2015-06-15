@@ -11,8 +11,6 @@
  * SetItemsColor methods to change the colors of a
  * window's menu.
  *
- * This sample uses the images placed in the samples\menu folder of OOHG oficial distro.
- *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  *

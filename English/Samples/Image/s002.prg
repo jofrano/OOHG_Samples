@@ -6,8 +6,6 @@
  *
  * This sample shows how to store/retrieve and image into/from
  * a BLOB field and how to show it using an IMAGE control.
- * When executed the sample creates IMAGE.DBF, IMAGE.FPT and
- * Output.ico (an exact copy of Input.ico).
  *
  * Visit us at https://github.com/fyurisich/OOHG_Samples or at
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki

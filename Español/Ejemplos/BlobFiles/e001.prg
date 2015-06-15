@@ -6,8 +6,6 @@
  *
  * Este ejemplo muestra como guardar/leer una imagen en/desde
  * un campo BLOB y como mostrarla usando un control IMAGE.
- * Este ejemplo crea los archivos IMAGE.DBF, IMAGE.FPT y
- * Output.ico (una copia exacta de Input.ico).
  *
  * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
@@ -22,8 +20,8 @@
 FUNCTION Main
 
    LOCAL aStruct := { {"CODE", "N", 3, 0}, {"IMAGE", "M", 10, 0} }
-   LOCAL cInput  := "Input.ico"
-   LOCAL cOutput := "Output.ico"
+   LOCAL cInput  := "input.ico"
+   LOCAL cOutput := "output.ico"
    LOCAL oForm
    LOCAL oImage
 
