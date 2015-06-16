@@ -4,7 +4,7 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * This sample shows how define a ProgressBar with Marquee
+ * This sample shows how to define a ProgressBar with Marquee
  * style (the control shows a never stopping animated bar),
  * and how to programmaticaly change the style.
  *
@@ -20,17 +20,17 @@ FUNCTION Main
 
    DEFINE WINDOW Form_1 ;
       AT 0,0 ;
-      WIDTH 366 + GetBorderWidth() ;
+      WIDTH 466 + GetBorderWidth() ;
       HEIGHT 200 + GetTitleHeight() + 2 * GetBorderHeight() ;
-      TITLE "ooHG Demo - ProgressBar with Marquee Style Demo" ;
+      TITLE "ooHG - Marquee and Normal Styles of ProgressBar Controls" ;
       MAIN
 
       @ 20,20 PROGRESSBAR Progress_1 ;
          OBJ oProg1 ;
-         WIDTH 320 ;
+         WIDTH 420 ;
          HEIGHT 26 ;
          SMOOTH ;
-         TOOLTIP "ProgressBar Control with Marquee Style" ;
+         TOOLTIP 'ProgressBar Control with Marquee Style. Click "Stop" button to stop the animation.' ;
          MARQUEE 90
       /*
        * 90 is the time, in milliseconds, between marquee animation updates.
@@ -41,22 +41,21 @@ FUNCTION Main
       @ 80,20 PROGRESSBAR Progress_2 ;
          OBJ oProg2 ;
          RANGE 0, 100 ;
-         WIDTH 320 ;
+         WIDTH 420 ;
          HEIGHT 26 ;
          SMOOTH ;
          VALUE 30 ;
-         TOOLTIP 'Normal ProgressBar Control. Click the button ' + ;
-                 '"Change Style" to turn me into a Marquee.'
+         TOOLTIP 'Normal ProgressBar Control. Click "Change Style" button to turn me into Marquee style.'
 
       @ 140,20 BUTTON Button_1 ;
+         OBJ oBut1 ;
          CAPTION "Change Style" ;
          WIDTH 100 ;
          HEIGHT 28 ;
-         ACTION nPrevious := ChangeStyle( oProg2, nPrevious ) ;
-         TOOLTIP 'Click to turn second progressbar into a Marquee ' + ;
-                 'and start it. Click a second time to set normal style.'
+         ACTION nPrevious := ChangeStyle( oProg2, nPrevious, oBut1 ) ;
+         TOOLTIP 'Click to turn second ProgressBar into Marquee style and start the animation.'
 
-      @ 140,240 BUTTON Button_2 ;
+      @ 140,340 BUTTON Button_2 ;
          OBJ oBut2 ;
          CAPTION "Stop" ;
          WIDTH 100 ;
@@ -71,16 +70,20 @@ FUNCTION Main
 
    ACTIVATE WINDOW Form_1
 
-Return Nil
+RETURN NIL
 
-FUNCTION ChangeStyle(oProg, nValue)
+FUNCTION ChangeStyle( oProg, nValue, oBut )
 
    IF oProg:IsStyleNormal()
       nValue := oProg:Value
 
       oProg:SetStyleMarquee( 20 )
+      oBut:ToolTip := 'Click to turn second ProgressBar into Normal style.'
+      oProg:ToolTip := 'Marquee ProgressBar Control. Click "Change Style" button to turn me into Normal style.'
    ELSE
       oProg:SetStyleNormal( nValue )
+      oBut:ToolTip := 'Click to turn second ProgressBar into Marquee style.'
+      oProg:ToolTip := 'Normal ProgressBar Control. Click "Change Style" button to turn me into Marquee style.'
    ENDIF
 
    /*
@@ -100,7 +103,7 @@ FUNCTION ChangeStyle(oProg, nValue)
     * the control's value if you want to restore it later.
     */
 
-Return nValue
+RETURN nValue
 
 FUNCTION ToggleMarquee( oProg, oBut )
 
@@ -109,10 +112,13 @@ FUNCTION ToggleMarquee( oProg, oBut )
          oProg:StopMarquee()
          oBut:Caption := "Start"
          oBut:ToolTip := 'Click to start first marquee.'
+         oBut:ToolTip := 'Click to start first marquee.'
+         oProg:ToolTip := 'Marquee ProgressBar Control. Click "Start" button to start the animation.'
       ELSE
          oProg:StartMarquee()
          oBut:Caption := "Stop"
          oBut:ToolTip := 'Click to stop first marquee.'
+         oProg:ToolTip := 'Normal ProgressBar Control. Click "Stop" button to stop the animation.'
       ENDIF
    ENDIF
 
@@ -125,7 +131,7 @@ FUNCTION ToggleMarquee( oProg, oBut )
     * point it stopped. It always starts from the begining.
     */
 
-Return Nil
+RETURN NIL
 
 /*
  * EOF
