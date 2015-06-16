@@ -112,7 +112,6 @@ FUNCTION ToggleMarquee( oProg, oBut )
          oProg:StopMarquee()
          oBut:Caption := "Start"
          oBut:ToolTip := 'Click to start first marquee.'
-         oBut:ToolTip := 'Click to start first marquee.'
          oProg:ToolTip := 'Marquee ProgressBar Control. Click "Start" button to start the animation.'
       ELSE
          oProg:StartMarquee()
