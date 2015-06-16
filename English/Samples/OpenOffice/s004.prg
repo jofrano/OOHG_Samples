@@ -56,7 +56,7 @@ FUNCTION Main()
       @ 370,20 BUTTON btn_Export ;
          CAPTION 'Export to OpenOffice' ;
          WIDTH 140 ;
-         ACTION ToOpenOffice( oForm, oGrid )
+         ACTION MyProcess( oForm, oGrid )
 
       ON KEY ESCAPE ACTION Form_1.Release()
    END WINDOW
@@ -66,7 +66,7 @@ FUNCTION Main()
 
 RETURN NIL
 
-FUNCTION ToOpenOffice( oForm, oGrid )
+FUNCTION MyProcess( oForm, oGrid )
 
    LOCAL cFile, cBefore, oSerM, oDesk, oPropVals, oBook, oSheet1, oSheet2
    LOCAL oSheet3, oCell, uValue, nLin, nRow, nCol, bErrBlck2, x, bErrBlck1

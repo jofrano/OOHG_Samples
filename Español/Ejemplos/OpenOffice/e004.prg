@@ -15,13 +15,13 @@
 
 FUNCTION Main()
 
-   LOCAL i, aRows[ 15, 5 ]
+   LOCAL i, aRows[ 15, 5 ], oForm, oGrid
 
    SET DATE BRITISH
    SET CENTURY ON
    SET NAVIGATION EXTENDED
 
-   DEFINE WINDOW Form_1 ;
+   DEFINE WINDOW Form_1 OBJ oForm ;
       AT 0,0 ;
       WIDTH 600 ;
       HEIGHT 480 ;
@@ -68,85 +68,152 @@ RETURN NIL
 
 FUNCTION MiProceso( oGrid )
 
-   LOCAL cBefore, oExcel, oSheet1, oSheet2, oSheet3, nLin, nRow, nCol
+   LOCAL cFile, cBefore, oSerM, oDesk, oPropVals, oBook, oSheet1, oSheet2
+   LOCAL oSheet3, oCell, uValue, nLin, nRow, nCol, bErrBlck2, x, bErrBlck1
 
-   cBefore := Form_1.StatusBar.Item( 1 )
-   Form_1.StatusBar.Item( 1 ) := 'Creating TEST.XLS in base folder ...'
+   cFile := HB_DirBase() + "PRUEBA.ODS"
 
+   cBefore := oForm:StatusBar:Item( 1 )
+   oForm:StatusBar:Item( 1, 'Creando ' + cFile + ' ...' )
+
+   // abrir el Service Manager
    #ifndef __XHARBOUR__
-      IF( oExcel := win_oleCreateObject( 'Excel.Application' ) ) == NIL
-         MsgStop( 'Error: Excel not available. [' + win_oleErrorText()+ ']' )
+      IF( oSerM := win_oleCreateObject( 'com.sun.star.ServiceManager' ) ) == NIL
+         MsgStop( 'Error: OpenOffice no está disponible. [' + win_oleErrorText()+ ']' )
          RETURN NIL
       ENDIF
    #else
-      oExcel := TOleAuto():New( 'Excel.Application' )
+      oSerM := TOleAuto():New( 'com.sun.star.ServiceManager' )
       IF Ole2TxtError() != 'S_OK'
-         MsgStop( 'Error: Excel not available.' )
+         MsgStop( 'Error: OpenOffice no está disponible.' )
          RETURN NIL
       ENDIF
    #endif
 
-   // Create new book
+   // capturar todos los errores
+   bErrBlck1 := ErrorBlock( { | x | break( x ) } )
 
-   oExcel:WorkBooks:Add()
-   oSheet1 := oExcel:ActiveSheet()
-   oSheet1:Name := "Sheet1"
+   BEGIN SEQUENCE
+      // abrir el Desktop Service
+      IF (oDesk := oSerM:CreateInstance("com.sun.star.frame.Desktop")) == NIL
+         MsgStop( 'Error: OpenOffice Desktop no está disponible.' )
+         BREAK
+      ENDIF
 
-   // Fill in some data and format it
+      // definir propiedades para un nuevo libro
+      oPropVals := oSerM:Bridge_GetStruct("com.sun.star.beans.PropertyValue")
+      oPropVals:Name := "Hidden"
+      oPropVals:Value := .T.
 
-   oSheet1:Cells:Font:Name := 'Arial'
-   oSheet1:Cells:Font:Size := 10
+      // abrir nuevo libro
+      IF (oBook := oDesk:LoadComponentFromURL("private:factory/scalc", "_blank", 0, {oPropVals})) == NIL
+         MsgStop( 'Error: OpenOffice Calc no está disponible.' )
+         BREAK
+      ENDIF
 
-   oSheet1:Cells( 1, 1 ):Value := Upper( 'Exported from OOHG !!!' )
-   oSheet1:Cells( 1, 1 ):Font:Bold := .T.
+      // remover todas las hojas excepto la primera
+      DO WHILE oBook:Sheets:GetCount() > 1
+         oSheet1 := oBook:Sheets:GetByIndex( oBook:Sheets:GetCount() - 1)
+         oBook:Sheets:RemoveByName( oSheet1:Name )
+      ENDDO
 
-   nLin := 4
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet1:Cells( nLin, nCol ):Value := Upper( oGrid:aHeaders[ nCol ] )
-      oSheet1:Cells( nLin, nCol ):Font:Bold := .T.
-   NEXT
-   nLin += 2
+      // definir a la primera hoja como corriente
+      oSheet1 := oBook:Sheets:GetByIndex(0)
+      oBook:GetCurrentController:SetActiveSheet(oSheet1)
 
-   FOR nRow := 1 to oGrid:ItemCount
-      FOR nCol := 1 to Len( oGrid:aHeaders )
-         oSheet1:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
+      // cambiar el nombre de la hoja y el nombre y el tamaño de la fuente por defecto
+      oSheet1:Name := "Hoja1"
+      oSheet1:CharFontName := 'Arial'
+      oSheet1:CharHeight := 10
+
+      // asignar el título
+      oCell := oSheet1:GetCellByPosition( 0, 0 )
+      oCell:SetString( 'Exportado desde OOHG !!!' )
+      oCell:CharWeight := 150
+
+      // exportar los cabezales de columna usando letra negrita
+      nLin := 4
+      FOR nCol := 1 TO Len( oGrid:aHeaders )
+         oCell := oSheet1:GetCellByPosition( nCol - 1, nLin - 1 )
+         oCell:SetString( oGrid:aHeaders[ nCol ] )
+         oCell:CharWeight := 150
       NEXT
-      nRow ++
-      nLin ++
-   NEXT
+      nLin += 2
 
-   FOR nCol := 1 TO Len( oGrid:aHeaders )
-      oSheet1:Columns( nCol ):AutoFit()
-   NEXT
+      // exportar las filas
+      FOR nRow := 1 to oGrid:ItemCount
+         FOR nCol := 1 to Len( oGrid:aHeaders )
+            oCell := oSheet1:GetCellByPosition( nCol - 1, nLin - 1 )
+            uValue := oGrid:Cell( nRow, nCol )
+            DO CASE
+            CASE uValue == NIL
+            CASE ValType( uValue ) == "C"
+               IF Left( uValue, 1 ) == "'"
+                  uValue := "'" + uValue
+               ENDIF
+               oCell:SetString( uValue )
+            CASE ValType( uValue ) == "N"
+               oCell:SetValue( uValue )
+            CASE ValType( uValue ) == "L"
+               oCell:SetValue( uValue )
+               oCell:SetPropertyValue("NumberFormat", 99 )
+            CASE ValType( uValue ) == "D"
+               oCell:SetValue( uValue )
+               oCell:SetPropertyValue( "NumberFormat", 36 )
+            CASE ValType( uValue ) == "T"
+               oCell:SetString( uValue )
+            OTHERWISE
+               oCell:SetFormula( uValue )
+            ENDCASE
+         NEXT
+         nRow ++
+         nLin ++
+      NEXT
 
-   // Copy sheet before
+      // autoajustar el ancho de las columnas
+      oSheet1:GetColumns():SetPropertyValue( "OptimalWidth", .T. )
 
-   oSheet1:Copy( oSheet1 )
-   oSheet2 := oExcel:ActiveSheet()
-   oSheet2:Name := "Sheet2"
+      // copiar una hoja a una nueva colocada antes
+      oBook:Sheets:CopyByName(oSheet1:Name, "Hoja2", 0)
+      oSheet2 := oBook:Sheets:GetByName("Hoja2")
+      oBook:GetCurrentController:SetActiveSheet(oSheet2)
 
-   // Copy sheet after
+      // copy una hoja a una nueva colocada al final
+      oBook:Sheets:CopyByName(oSheet1:Name, "Hoja3", 0)
+      oBook:Sheets:MoveByName("Hoja3", 2)
 
-   oSheet1:Copy( oSheet1 )
-   oSheet3 := oExcel:ActiveSheet()
-   oSheet3:Name := "Sheet3"
-   oSheet1:Move( oSheet3 )
+      // El orden final de las hojas es: Hoja2, Hoja1, Hoja3
 
-   // Final sheet order: Sheet2, Sheet1, Sheet3
+      bErrBlck2 := ErrorBlock( { | x | break( x ) } )
 
-   // Save
+      BEGIN SEQUENCE
+         // grabar
+         oBook:StoreToURL( OO_ConvertToURL( cFile ), {} )
+         oBook:Close( 1 )
 
-   ERASE TEST.XLS
+         MsgInfo( cFile + ' fue creado.' )
+      RECOVER USING x
+         // si oBook:StoreToURL() falla, mostrar el error
+         MsgStop( x:Description, "Error de OpenOffice" )
+         MsgStop( cFile + ' no fue creado !!!' )
+      END SEQUENCE
 
-   oSheet1:SaveAs( HB_DirBase() + 'TEST.XLS' )
-   oExcel:WorkBooks:Close()
-   oExcel:Quit()
+      ErrorBlock( bErrBlck2 )
 
+   RECOVER USING x
+      MsgStop( x:Description, "Error de OpenOffice " )
+   END SEQUENCE
+
+   ErrorBlock( bErrBlck1 )
+
+   // cleanup
+   oCell   := NIL
    oSheet1 := NIL
-   oExcel := NIL
-
-   MsgInfo( HB_DirBase() + 'TEST.XLS was created' + HB_OsNewLine() + ;
-            'and EXCEL.EXE was unloaded from memory.' )
+   oSheet2 := NIL
+   oSheet3 := NIL
+   oBook   := Nil
+   oDesk   := Nil
+   oSerM   := Nil
 
    Form_1.StatusBar.Item( 1 ) := cBefore
 
