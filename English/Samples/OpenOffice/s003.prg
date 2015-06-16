@@ -4,8 +4,8 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Portions of the code in the ToOpenOffice function are
- * licensed under OOHG's license.
+ * Portions of the code in the function MyProcess and
+ * ConvertToDbf are licensed under OOHG's license.
  *
  * This sample shows how to create an OpenOffice workbook
  * from an array, how to create a DBF from an OpenOffice
