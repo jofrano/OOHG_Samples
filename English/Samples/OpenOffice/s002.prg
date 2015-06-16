@@ -4,9 +4,6 @@
  * Licensed bajo The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Portions of the code in the function Open are
- * licensed under OOHG's license.
- *
  * This sample shows how to open an OpenOffice workbook in
  * read only mode.
  *

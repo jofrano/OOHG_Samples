@@ -4,9 +4,6 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Portions of the code in the function ToOpenOffice are
- * licensed under OOHG's license.
- *
  * This sample shows how to create an OpenOffice workbook,
  * using data from a Grid, without user's interaction.
  *

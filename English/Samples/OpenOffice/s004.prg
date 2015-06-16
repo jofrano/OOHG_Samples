@@ -4,9 +4,6 @@
  * Licensed under The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Portions of the code in the ToOpenOffice function are
- * licensed under OOHG's license.
- *
  * This sample shows how to copy and move worksheets of
  * an OpenOffice Calc workbook.
  *

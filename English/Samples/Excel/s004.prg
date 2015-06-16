@@ -6,8 +6,6 @@
  *
  * Based on a sample from OOHG distribution build by
  * Ciro Vargas C. <cvc@oohg.org>
- * Portions of the code in the ToExcel function are
- * licensed under OOHG's license.
  *
  * This sample shows how to create an Excel workbook using
  * data from a Grid control, without user's interaction.
