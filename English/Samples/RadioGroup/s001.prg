@@ -29,7 +29,6 @@ FUNCTION Main
          OPTIONS { 'One', 'Two', 'Three', 'Four' } ;
          TOOLTIP { 'Item 1', 'Item 2', 'Item 3', 'Item 4' } ;
          WIDTH 80 ;
-         FONTCOLOR RED ;
          SPACING 24 ;
          THEMED
 
@@ -37,7 +36,6 @@ FUNCTION Main
          OPTIONS { 'Uno', 'Dos', 'Tres', 'Cuatro' } ;
          TOOLTIP 'ToolTip' ;
          WIDTH 80 ;
-         FONTCOLOR GREEN ;
          SPACING 24 ;
          THEMED
 
