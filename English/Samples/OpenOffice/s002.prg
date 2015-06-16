@@ -4,7 +4,7 @@
  * Licensed bajo The Code Project Open License (CPOL) 1.02
  * See <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Portions of the code in the ToOpenOffice function are
+ * Portions of the code in the function Open are
  * licensed under OOHG's license.
  *
  * This sample shows how to open an OpenOffice workbook in
@@ -34,7 +34,7 @@ FUNCTION Main
       END STATUSBAR
 
       @ 370,20 BUTTON btn_Abrir ;
-         CAPTION 'Open OpenOffice' ;
+         CAPTION 'Open File' ;
          WIDTH 140 ;
          ACTION Open()
 
@@ -50,7 +50,7 @@ FUNCTION Open
 
    LOCAL w_arch, oSerM, oDesk, oPropVals, oBook, x, bErrBlck1
 
-   IF Empty(w_arch := GetFile({ {'*.ods','*.ods'} }, 'Open OpenOffice', 'C:\', .f., .f.))
+   IF Empty(w_arch := GetFile({ {'*.ods','*.ods'} }, 'Open File', 'C:\', .f., .f.))
       RETURN NIL
    ENDIF
 
