@@ -21,7 +21,6 @@ Function Main()
       WIDTH 600 ;
       HEIGHT 240 ;
       TITLE "ooHG Splitbox Demo" ;
-      ICON "ONE" ;
       MAIN
 
       DEFINE SPLITBOX OBJ Split
