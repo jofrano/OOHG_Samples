@@ -20,7 +20,6 @@ FUNCTION Main
    LOCAL cEntrada := "input.ico"
    LOCAL cSalida  := "output.ico"
    LOCAL oForm
-   LOCAL oImagen
 
    REQUEST DBFCDX, DBFFPT
    RDDSETDEFAULT( "DBFCDX")
@@ -50,10 +49,12 @@ FUNCTION Main
       WIDTH 588 ;
       HEIGHT 480 ;
       TITLE 'Mostrar una imagen desde un campo BLOB' ;
-      MAIN
+      MAIN ;
+      ON RELEASE IIF( MsgYesNo( "¿Borrar archivos auxiliares?" ), ;
+                      Limpiar( cSalida ), ;
+                      NIL )
 
       @ 10, 10 IMAGE Img_1 ;
-         OBJ oImagen ;
          IMAGESIZE ;
          BUFFER BLOBGET( FIELDPOS( "IMAGEN" ) )
 
@@ -66,6 +67,13 @@ FUNCTION Main
    CLOSE DATABASES
 
 RETURN NIL
+
+PROCEDURE Limpiar( cSalida )
+   CLOSE DATABASES
+   FERASE( "IMAGENES.DBF" )
+   FERASE( "IMAGENES.FPT" )
+   FERASE( cSalida )
+RETURN
 
 /*
  * EOF
