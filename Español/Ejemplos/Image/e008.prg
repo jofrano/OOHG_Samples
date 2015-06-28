@@ -13,6 +13,9 @@
  *
  * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
+ *
+ * El archivo oohg.gif puede descargarse desde:
+ * https://github.com/fyurisich/OOHG_Samples/tree/master/Español/Ejemplos/Image
  */
 
 #include "oohg.ch"
