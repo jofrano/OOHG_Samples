@@ -4,7 +4,7 @@
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
  * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Este ejemplo muestra como printar una imagen sobre otra y
+ * Este ejemplo muestra como pintar una imagen sobre otra y
  * como simular una imagen móvil, utilizando los métodos Copy
  * y Blend. Dese por avisado que bajo XP el flicker es horrible.
  * Vea en el Changelog la nota relacionada.
