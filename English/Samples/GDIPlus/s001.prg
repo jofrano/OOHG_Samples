@@ -46,7 +46,7 @@ PROCEDURE Main()
       AT 0,0 ;
       WIDTH 640 ;
       HEIGHT 480 ;
-      TITLE 'GDI+: Save Bitmap To File Demo' ;
+      TITLE 'GDI+: Save Bitmap To File' ;
       MAIN ;
       NOMAXIMIZE ;
       NOSIZE ;
@@ -113,20 +113,20 @@ PROCEDURE Main()
                                "Info" )
             SEPARATOR
             MENUITEM "Image Info" NAME mnu_INFO DISABLED ;
-               ACTION AutoMsgInfo( { "Picture name: " + hb_OSNewLine() + ;
+               ACTION AutoMsgInfo( { "Name: " + hb_OSNewLine() + ;
                                         cPicture, ;
-                                     "Image Width: " + hb_OSNewLine() + ;
+                                     "Width: " + hb_OSNewLine() + ;
                                         LTrim( Str( aSize[HBITMAP_WIDTH] ) ), ;
-                                     "Image Height: " + hb_OSNewLine() + ;
+                                     "Height: " + hb_OSNewLine() + ;
                                         LTrim( Str( aSize[HBITMAP_HEIGHT] ) ), ;
-                                     "BitsPerPixel: " + hb_OSNewLine() + ;
+                                     "Bits per Pixel: " + hb_OSNewLine() + ;
                                         LTrim( Str( aSize[HBITMAP_BITSPIXEL] ) ) }, ;
                                    "Image Info" )
-            MENUITEM "JPEG Info" ;
+            MENUITEM '"rainbow.jpg" Info' ;
                ACTION GetImageInfo( GetStartupFolder() + "\rainbow.jpg" )
-            MENUITEM "Another JPEG Info" ;
+            MENUITEM '"fondo.jpg" Info' ;
                ACTION GetImageInfo( GetStartupFolder() + "\fondo.jpg" )
-            MENUITEM "PNG Info" ;
+            MENUITEM '"ohh.png" Info' ;
                ACTION GetImageInfo( GetStartupFolder() + "\ohh.png" )
          END POPUP
       END MENU
@@ -179,9 +179,9 @@ FUNCTION GetImageInfo( cFile )
    nWidth  := gPlusGetImageWidth( nImage )
    nHeight := gPlusGetImageHeight( nImage )
 
-   AutoMsgInfo( { "Picture name: " + hb_OSNewLine() + cFile, ;
-                  "Image Width: "  + hb_OSNewLine() + LTrim( Str( nWidth ) ), ;
-                  "Image Height: " + hb_OSNewLine() + LTrim( Str( nHeight ) ) }, ;
+   AutoMsgInfo( { "Name: " + hb_OSNewLine() + cFile, ;
+                  "Width: "  + hb_OSNewLine() + LTrim( Str( nWidth ) ), ;
+                  "Height: " + hb_OSNewLine() + LTrim( Str( nHeight ) ) }, ;
                 "Image Info" )
 RETURN NIL
 
