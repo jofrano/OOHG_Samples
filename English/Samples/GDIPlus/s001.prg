@@ -111,10 +111,6 @@ PROCEDURE Main()
                ACTION MsgInfo( "Number of image encoders: " + ;
                                   LTrim( Str( gPlusGetEncodersNum() ) ), ;
                                "Info" )
-            MENUITEM 'Get size of image encoders array in bytes' ;
-               ACTION MsgInfo( "Size of image encoders array (in bytes): " + ;
-                                  LTrim( Str( gPlusGetEncodersSize() ) ), ;
-                               "Info" )
             SEPARATOR
             MENUITEM "Image Info" NAME mnu_INFO DISABLED ;
                ACTION AutoMsgInfo( { "Picture name: " + hb_OSNewLine() + ;
