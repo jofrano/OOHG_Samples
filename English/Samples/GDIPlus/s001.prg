@@ -107,12 +107,12 @@ PROCEDURE Main()
             MENUITEM "E&xit" ACTION ThisWindow.Release
          END POPUP
          DEFINE POPUP "&?"
-            MENUITEM 'Get number of image coders' ;
-               ACTION MsgInfo( "Number of image coders: " + ;
+            MENUITEM 'Get number of image encoders' ;
+               ACTION MsgInfo( "Number of image encoders: " + ;
                                   LTrim( Str( gPlusGetEncodersNum() ) ), ;
                                "Info" )
-            MENUITEM 'Get size of image coders array in bytes' ;
-               ACTION MsgInfo( "Size of image coders array (in bytes): " + ;
+            MENUITEM 'Get size of image encoders array in bytes' ;
+               ACTION MsgInfo( "Size of image encoders array (in bytes): " + ;
                                   LTrim( Str( gPlusGetEncodersSize() ) ), ;
                                "Info" )
             SEPARATOR
