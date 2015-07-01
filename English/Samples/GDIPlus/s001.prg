@@ -121,7 +121,7 @@ PROCEDURE Main()
                                         LTrim( Str( aSize[HBITMAP_HEIGHT] ) ), ;
                                      "BitsPerPixel: " + hb_OSNewLine() + ;
                                         LTrim( Str( aSize[HBITMAP_BITSPIXEL] ) ) }, ;
-                                   "BMP Info" )
+                                   "Image Info" )
             MENUITEM "JPEG Info" ;
                ACTION GetImageInfo( GetStartupFolder() + "\rainbow.jpg" )
             MENUITEM "Another JPEG Info" ;
