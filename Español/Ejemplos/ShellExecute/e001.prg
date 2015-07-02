@@ -5,7 +5,8 @@
  * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
  * Este ejemplo muestra como usar la funcion ShellExecute para
- * abrir una ventana de Explorer en una carpeta dada.
+ * abrir una ventana del Explorador de Archivos de Windows en
+ * una carpeta dada.
  *
  * Visítenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
@@ -16,9 +17,9 @@
 FUNCTION Main
 
    DEFINE WINDOW Win1 ;
-      WIDTH 400 ;
+      WIDTH 440 ;
       HEIGHT 200 ;
-      TITLE "Abrir Explorer desde OOHG"
+      TITLE "Abrir Explorador de Archivos desde OOHG"
 
       @ 10, 10 BUTTON But1 ;
          CAPTION "Abrir" ;
@@ -26,7 +27,7 @@ FUNCTION Main
                   MsgBox( "La ejecución continúa sin pausa !!!" ) )
 
       @ 100, 10 LABEL Lbl1 ;
-         VALUE "Haga clic en el botón para abrir Explorer" ;
+         VALUE "Haga clic en el botón para abrir Explorador de Archivos" ;
          AUTOSIZE
 
       ON KEY ESCAPE ACTION Win1.Release()
