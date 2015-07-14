@@ -35,6 +35,7 @@ FUNCTION Main
                WIDTH 280
                VALUE .F.
                CAPTION 'CheckBox with Transparent Background'
+               FONTCOLOR BLUE
                THREESTATE .T.
                LEFTALIGN .T.
             END CHECKBOX
