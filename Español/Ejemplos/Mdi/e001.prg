@@ -160,8 +160,8 @@ PROCEDURE IniciarChild( oMain, oChild )
    oMain:StatusBar:Item( 1, "Nueva child: " + oChild:Name )
 
    /*
-    * Note that at this point a runtime error occurs if you try to
-    * access the oChild:StatusBar or oChild:lbl_1 controls.
+    * Note que en este punto ocurre un error en tiempo de ejecución
+    * si se intenta acceder a los controles oChild:StatusBar u oChild:lbl_1.
     */
 RETURN
 
