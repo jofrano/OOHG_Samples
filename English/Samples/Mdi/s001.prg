@@ -120,13 +120,16 @@ PROCEDURE NewChild( oMain )
       PARENT wMain ;
       WIDTH 300 ;
       HEIGHT 200 ;
-      NOMAXIMIZE ;
-      NOMINIMIZE ;
-      NOSIZE ;
       MDICHILD ;
       ON INIT InitChild( oMain, _OOHG_ThisForm ) ;
       ON RELEASE oMain:StatusBar:Item( 1, "" ) ;
       ON GOTFOCUS oMain:StatusBar:Item( 1, "Active: " + ThisWindow:Title )
+
+      DEFINE STATUSBAR
+         STATUSITEM ""
+      END STATUSBAR
+
+      ThisWindow:StatusBar:Item( 1, ThisWindow:Name )
 
       @ 20, 20 LABEL lbl_1 ;
          PARENT ( ThisWindow:Name ) ;
@@ -155,6 +158,11 @@ PROCEDURE InitChild( oMain, oChild )
       ACTION oChild:Release()
 
    oMain:StatusBar:Item( 1, "New child: " + oChild:Name )
+
+   /*
+    * Note that at this point a runtime error occurs if you try to
+    * access the oChild:StatusBar or oChild:lbl_1 controls.
+    */
 RETURN
 
 PROCEDURE MyMessage( oWin )

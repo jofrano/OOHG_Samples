@@ -125,6 +125,12 @@ PROCEDURE NuevaChild( oMain )
       ON RELEASE oMain:StatusBar:Item( 1, "" ) ;
       ON GOTFOCUS oMain:StatusBar:Item( 1, "Activa: " + ThisWindow:Title )
 
+      DEFINE STATUSBAR
+         STATUSITEM ""
+      END STATUSBAR
+
+      ThisWindow:StatusBar:Item( 1, ThisWindow:Name )
+
       @ 20, 20 LABEL lbl_1 ;
          PARENT ( ThisWindow:Name ) ;
          VALUE "Label en " + _OOHG_ThisForm:Title + " - Haz clic sobre mi !!!" ;
@@ -152,6 +158,11 @@ PROCEDURE IniciarChild( oMain, oChild )
       ACTION oChild:Release()
 
    oMain:StatusBar:Item( 1, "Nueva child: " + oChild:Name )
+
+   /*
+    * Note that at this point a runtime error occurs if you try to
+    * access the oChild:StatusBar or oChild:lbl_1 controls.
+    */
 RETURN
 
 PROCEDURE MiMensaje( oWin )
