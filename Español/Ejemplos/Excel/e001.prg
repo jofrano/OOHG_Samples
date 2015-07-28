@@ -1,18 +1,18 @@
 /*
- * Ejemplo Excel n∞ 1
+ * Ejemplo Excel n¬∞ 1
  * Autor: Fernando Yurisich <fernando.yurisich@gmail.com>
  * Licenciado bajo The Code Project Open License (CPOL) 1.02
  * Ver <http://www.codeproject.com/info/cpol10.aspx>
  *
- * Basado en un ejemplo de la distribuciÛn de OOHG creada
+ * Basado en un ejemplo de la distribuci√≥n de OOHG creada
  * por Ciro Vargas C. <cvc@oohg.org>
- * Partes del cÛdigo en la funciÛn ToExcel est·n
+ * Partes del c√≥digo en la funci√≥n ToExcel est√°n
  * licenciadas bajo la licencia de OOHG.
  *
  * Este ejemplo muestra como crear un libro Excel utilizando
- * datos de un control Grid, sin la interacciÛn del usuario.
+ * datos de un control Grid, sin la interacci√≥n del usuario.
  *
- * VisÌtenos en https://github.com/fyurisich/OOHG_Samples o en
+ * Vis√≠tenos en https://github.com/fyurisich/OOHG_Samples o en
  * http://oohg.wikia.com/wiki/Object_Oriented_Harbour_GUI_Wiki
  */
 
@@ -48,7 +48,7 @@ FUNCTION Main()
       @ 20,20 GRID Grid_1 obj oGrid ;
          WIDTH 520 ;
          HEIGHT 330 ;
-         HEADERS { 'C”DIGO', 'NUMERO', 'FECHA', 'REFERENCIA', 'IMPORTE' } ;
+         HEADERS { 'C√ìDIGO', 'NUMERO', 'FECHA', 'REFERENCIA', 'IMPORTE' } ;
          WIDTHS { 60, 80, 100, 120, 140 } ;
          ITEMS aRows ;
          COLUMNCONTROLS { { 'TEXTBOX', 'CHARACTER', '99' } , ;
@@ -80,13 +80,13 @@ FUNCTION ToExcel( oGrid )
 
 #ifndef __XHARBOUR__
    IF( oExcel := win_oleCreateObject( 'Excel.Application' ) ) == NIL
-      MsgStop( 'Error: Excel no est· disponible [' + win_oleErrorText()+ ']' )
+      MsgStop( 'Error: Excel no est√° disponible [' + win_oleErrorText()+ ']' )
       RETURN NIL
    ENDIF
 #else
    oExcel := TOleAuto():New( 'Excel.Application' )
    IF Ole2TxtError() != 'S_OK'
-      MsgStop( 'Error: Excel no est· disponible.' )
+      MsgStop( 'Error: Excel no est√° disponible.' )
       RETURN NIL
    ENDIF
 #endif
@@ -110,7 +110,7 @@ FUNCTION ToExcel( oGrid )
       FOR nCol := 1 to Len( oGrid:aHeaders )
          oSheet:Cells( nLin, nCol ):Value := oGrid:Cell( nRow, nCol )
       NEXT
-      nRow ++
+     ** nRow ++
       nLin ++
    NEXT
 
